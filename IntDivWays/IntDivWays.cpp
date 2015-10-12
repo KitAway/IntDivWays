@@ -10,12 +10,12 @@ void printResult(int*, int);
 
 int main()
 {
-	const int sum = 5;
-	const int num = 6;
-	bool bInc=false;
+	const int sum = 15;
+	const int num = 3;
+	bool bInc = false;
 	int p[num];
 	int numNow = 0, rest = sum, total = 0;
-	
+
 	while (numNow >= 0)
 	{
 		if (bInc)
@@ -29,21 +29,15 @@ int main()
 			p[numNow] = intDivide(rest, num - numNow);
 			rest -= p[numNow];
 		}
+
+		if (rest + numNow<num - 1 || (numNow != 0 && p[numNow] > p[numNow - 1]))
+		{
+			rest += p[numNow];
+			numNow--;
+			bInc = true;
+			continue;
+		}
 		
-		if (numNow != 0 && p[numNow] > p[numNow - 1])
-		{
-			rest += p[numNow];
-			numNow--;
-			bInc = true;
-			continue;
-		}
-		if (rest+numNow<num-1)
-		{
-			rest += p[numNow];
-			numNow--;
-			bInc = true;
-			continue;
-		}
 		if (rest> 0)
 		{
 			numNow++;
@@ -52,19 +46,13 @@ int main()
 		if (rest == 0 && numNow == num - 1)
 		{
 			total++;
-			//printResult(p, num);
+			printResult(p, num);
 			rest = p[numNow];
 			numNow--;
 			bInc = true;
 			continue;
 		}
-		if (rest <= 0 )
-		{
-			rest += p[numNow];
-			numNow--;
-			bInc = true;
-			continue;
-		}
+
 	}
 	cout << total << endl;
     return 0;
